@@ -48,7 +48,7 @@ with open('input_2.txt', 'r') as f:
 
         ###### non even almost monotonic #######
         if sum(increasing) < l_diffs-1 and sum(decreasing) < l_diffs-1:
-            print('Report is not even almost monotonic')
+            # print('Report is not even almost monotonic')
             continue
         
         ######## almost monotonic #######
@@ -64,14 +64,14 @@ with open('input_2.txt', 'r') as f:
             is_almost_safe = check_report_is_safe(report_1)
             if is_almost_safe:
                 num_safe += 1
-                print('is almost safe after removing the first element') 
+                # print('is almost safe after removing the first element') 
                 continue
             else:
                 report_2 = np.delete(report_np, fault_index+1)
                 is_almost_safe = check_report_is_safe(report_2)
                 if is_almost_safe:
                     num_safe += 1
-                    print('is almost safe after removing the second element') 
+                    # print('is almost safe after removing the second element') 
                     continue
         
         #### monotonic #######
@@ -79,7 +79,7 @@ with open('input_2.txt', 'r') as f:
             # test if almost all the abs diffs are all between 1 and 3
             is_amplitude = ((abs(diffs) >= 1)).tolist() and ((abs(diffs) <= 3)).tolist()
             if sum(is_amplitude) < l_diffs-1:
-                print('more than one amplitude is not between 1 and 3')
+                # print('more than one amplitude is not between 1 and 3')
                 continue
             if sum(is_amplitude) == l_diffs-1:
                 fault_index = is_amplitude.index(False)
@@ -88,13 +88,13 @@ with open('input_2.txt', 'r') as f:
                 is_almost_safe = check_report_is_safe(report_1)
                 if is_almost_safe:
                     num_safe += 1
-                    print('although totally monotonic, it is almost safe after removing the first element')
+                    # print('although totally monotonic, it is almost safe after removing the first element')
                     continue
                 else:
                     report_2 = np.delete(report_np, fault_index+1)
                     is_almost_safe = check_report_is_safe(report_2)
                     if is_almost_safe:
-                        print('although totally monotonic, it is almost safe after removing the first element')
+                        # print('although totally monotonic, it is almost safe after removing the first element')
                         num_safe += 1
                         continue
 
