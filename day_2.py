@@ -1,5 +1,11 @@
 import numpy as np
 
+# Problem summary: how many reports are safe? a report is safe if:
+## 1. it is monotonic (increasing or decreasing)
+## 2. the difference between consecutive elements is between 1 and 3
+# Solution idea: use diff to calculate the difference between consecutive elements and check the difference values.
+
+######## Q1 #########
 def check_report_is_safe(report: list) -> bool:
     report_np = np.array(report)
     diffs = np.diff(report_np) # Calculate the difference between consecutive elements
@@ -19,13 +25,16 @@ with open('input_2.txt', 'r') as f:
 
 ######## Q2 #########
 
-# def check_report_is_monotonic(report: list) -> bool:
-#     report_np = np.array(report)
-#     diffs = np.diff(report_np) # Calculate the difference between consecutive elements
-#     if all(diffs > 0) or all(diffs < 0):
-#         if(all(abs(diffs) >= 1) and all(abs(diffs) <= 3)):
-#             return True
-#     return False
+# Part 2 summary: a report is safe if it can be made safe by removing one element.
+# Solution idea: 
+# 1. check if the report is safe
+# 2. almost monotonic: if the report has only one error in the monotonicity.
+## in this case, try removing one of the two elements around this error and check if the report is safe. 
+# 3. not-even almost monotonic: if the report has more than one error in the monotonicity. It can not be made safe.
+# 4. not safe but monotonic: if the report is monotonic then check if the amplitude of the diffs is between 1 and 3.
+## in this case, try removing one of the two elements around the amplitude-error.
+
+
 
 
 with open('input_2.txt', 'r') as f:
@@ -33,6 +42,7 @@ with open('input_2.txt', 'r') as f:
     for line in f:
         report = list(map(int, line.split()))
         
+        # check if the report is already safe
         if check_report_is_safe(report):
             num_safe += 1
             continue
@@ -46,9 +56,8 @@ with open('input_2.txt', 'r') as f:
         increasing = ((diffs > 0)).tolist()
         decreasing = ((diffs < 0)).tolist()
 
-        ###### non even almost monotonic #######
+        ###### not even almost monotonic #######
         if sum(increasing) < l_diffs-1 and sum(decreasing) < l_diffs-1:
-            # print('Report is not even almost monotonic')
             continue
         
         ######## almost monotonic #######
@@ -64,14 +73,14 @@ with open('input_2.txt', 'r') as f:
             is_almost_safe = check_report_is_safe(report_1)
             if is_almost_safe:
                 num_safe += 1
-                # print('is almost safe after removing the first element') 
+                # print('report is almost safe after removing the first element') 
                 continue
             else:
                 report_2 = np.delete(report_np, fault_index+1)
                 is_almost_safe = check_report_is_safe(report_2)
                 if is_almost_safe:
                     num_safe += 1
-                    # print('is almost safe after removing the second element') 
+                    # print('report is almost safe after removing the second element') 
                     continue
         
         #### monotonic #######
@@ -88,15 +97,14 @@ with open('input_2.txt', 'r') as f:
                 is_almost_safe = check_report_is_safe(report_1)
                 if is_almost_safe:
                     num_safe += 1
-                    # print('although totally monotonic, it is almost safe after removing the first element')
+                    # print('report is totally monotonic, and it is safe after removing the first element that caused the amplitude problem')
                     continue
                 else:
                     report_2 = np.delete(report_np, fault_index+1)
                     is_almost_safe = check_report_is_safe(report_2)
                     if is_almost_safe:
-                        # print('although totally monotonic, it is almost safe after removing the first element')
+                        # print('report is totally monotonic, it is almost safe after removing the second element that caused the amplitude problem')
                         num_safe += 1
                         continue
 
-    print(f'Q2: Num safe reports: {num_safe}')
-
+    print(f'Q2: The number of safe reports after dampening is: {num_safe}')

@@ -1,4 +1,5 @@
-
+# Problem summary: calculate the total distance between two lists of numbers
+# Solution idea: sort the lists and calculate the distance between each pair of elements in the same index.
 list_1 = []
 list_2 = []
 
@@ -18,7 +19,9 @@ total_distance = sum(distances)
 print(f'Q1: The total distance between the lists is: {total_distance}')
 
 ##### Q2 #####
-# option 1: naive O(n^2) - pass with double for-loop and count everything (Not Implemented)
+# Problem summary: calculate the similarity score between two lists of numbers.
+# Solution idea:
+# option 1: naive O(n^2) - pass with double for-loop and count everything naively (Not Implemented)
 # option 2: count repetitions of numbers separately in each list, multiply (repititions in list_1 * repettions in list_2 * the value) - O(n* dictionary operations) = O(n) on average 
 
 reps_1 = {x:0 for x in set(list_1 + list_2)} 

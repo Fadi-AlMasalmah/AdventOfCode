@@ -1,3 +1,9 @@
+
+###### Q1 ##########
+# problem summary: count XMAS in a 2D grid of characters, check all 8 directions.
+# solution idea: from each cell in the 2D grid, test the 8 directions and see if it has XMAS in that direction. 
+
+
 data = []
 with open("input_4.txt", "r") as f:
     for line in f:
@@ -9,12 +15,15 @@ m = len(data[0])
 directions = [(1, 0), (1, 1), (0,1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1)] 
 
 def is_valid(i,j):
+    ''' Check if the index (i,j) is valid in the 2D grid '''
     return i >= 0 and i < n and j >= 0 and j < m
 
 def step_in_direction(steps , direction):
+    ''' Step in the given direction (dx, dy) for the given number of steps '''
     return steps * direction[0], steps * direction[1]
 
 def count_xmas_at_ij(i, j, data):
+    ''' Count the number of XMAS starting from (i,j) in all 8 directions '''
     res = 0
     if data[i][j] == 'X':
         for dir in directions:
@@ -39,7 +48,8 @@ print(f"Q1: The number of XMAS is: {xmas_count}")
 
 ########## Q2 ##########
 
-# Recognize MAS and MAS in an X pattern, each one could be forwards or backwards
+# Problem summary: Recognize (MAS,MAS) located in an X pattern, each one could be forwards or backwards
+# solution idea: check the diagonal and anti-diagonal directions for each A in the grid, and check if there is a MAS in that direction.
 
 def is_MAS_diag(i, j, data):
     ''' Check if there is a MAS in the diagonal direction starting from A at (i,j) '''
